@@ -52,6 +52,9 @@ function start() {
           case "Add An Employee":
             addEmployee();
           break;
+          case "Update An Employee":
+            updateEmployee();
+          break;
         default:
             process.exit()
           break;
@@ -157,7 +160,7 @@ function addRole() {
           
           // Insert the role into the database
           db.query(
-            "INSERT INTO role (name, salary, department_id) VALUES (?, ?, ?);",
+            "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?);",
             [roleName, roleSalary, results[0].id],
             (err, results) => {
               if (err) {
@@ -206,7 +209,7 @@ function addRole() {
         
         // Check if the role exists in the database
         db.query(
-            "SELECT * FROM role WHERE name = ?;",
+            "SELECT * FROM role WHERE title= ?;",
             [role],
             (err, results) => {
             if (err) {
@@ -222,7 +225,7 @@ function addRole() {
             
             // Insert the employee into the database
             db.query(
-                "INSERT INTO employee (first_name, last_name, role_id, manager) VALUES (?, ?, ?, ?);",
+                "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);",
                 [firstName, lastName, results[0].id, manager],
                 (err, results) => {
                 if (err) {
@@ -238,7 +241,70 @@ function addRole() {
         });
 }
 
-
+function updateEmployee() {
+    // Retrieve the list of employees from the database
+    db.query("SELECT * FROM employee;", (err, employees) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+  
+      // Prompt the user to select an employee to update
+      inquirer
+        .prompt([
+          {
+            type: "list",
+            name: "employeeId",
+            message: "Select the employee to update:",
+            choices: employees.map((employee) => ({
+              name: `${employee.first_name} ${employee.last_name}`,
+              value: employee.id,
+            })),
+          },
+          {
+            type: "input",
+            name: "newRole",
+            message: "Enter the employee's new role:",
+          },
+        ])
+        .then((data) => {
+          const employeeId = data.employeeId;
+          const newRole = data.newRole;
+  
+          // Check if the new role exists in the database
+          db.query(
+            "SELECT * FROM role WHERE title = ?;",
+            [newRole],
+            (err, results) => {
+              if (err) {
+                console.log(err);
+                return;
+              }
+  
+              if (results.length === 0) {
+                console.log(`Role "${newRole}" does not exist.`);
+                start();
+                return;
+              }
+  
+              // Update the employee's role in the database
+              db.query(
+                "UPDATE employee SET role_id = ? WHERE id = ?;",
+                [results[0].id, employeeId],
+                (err, results) => {
+                  if (err) {
+                    console.log(err);
+                    return;
+                  }
+                  console.log("Employee role updated successfully.");
+                  start();
+                }
+              );
+            }
+          );
+        });
+    });
+  }
    
 // WHEN I choose to update an employee role
 // THEN I am prompted to select an employee to update and their new role and this information is updated in the database     
