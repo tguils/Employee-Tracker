@@ -9,14 +9,8 @@ This application is an employee tracker. The user will go through a set of promp
 
 To initiate and use this app the user must ensure that inquirer and MySQL are installed by typing "npm i" in the command line. Then the user will start the application by typing "npm start" in the command line. This will introduce a list of items the user can select depending on what they would like to see or do. The user can view each table including a department table, role table, and employee table. The user can also add departments, roles, or employees to the tables and re-run the application to see the updated data. 
 
-![Alt text](./assets/Screenshot1.png)
+![Alt text](./images/screenshot1.png)
+![Alt text](./images/screenshot2.png)
 
-[Github Test URL](https://tguils.github.io/Password-Generator/)
+[Github Test URL](https://github.com/tguils/Employee-Tracker)
 
-# Credits
-
-
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-
-
-https://dev.to/
