@@ -12,5 +12,5 @@ To initiate and use this app the user must ensure that inquirer and MySQL are in
 ![Alt text](./images/screenshot1.png)
 ![Alt text](./images/screenshot2.png)
 
-[Github Test URL](https://github.com/tguils/Employee-Tracker)
+[Walkthrough Video](https://drive.google.com/file/d/1P9ENeO8itsSrf6NvkHJTNvRXj_1LOYrj/view)
 

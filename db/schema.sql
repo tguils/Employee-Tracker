@@ -32,4 +32,3 @@ CREATE TABLE employee (
     REFERENCES employee(id)
     ON DELETE SET NULL
 );
-console.table("department");
